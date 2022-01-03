@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Your Meal</title>
+    <script src="cart.js" type="text/javascript"></script>
+    <style>
+        .images{
+            height: 200px; width: 300px;margin-top: 20px;
+            
+        }
+        #line{
+            display: flex; 
+        }
+        .foods{
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="nav">
+            <button onclick="getFood()">Menu</button>
+            <button>SignUp</button>
+            <button>Login</button>
+            <!-- <button><a href=""  >Cart</button></a> -->
+        </div>
+        <div id="menu">
+            <div id="line">
+                
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>
+
+<script>
+    let menu = document.getElementById('menu');
+
+        async function getFood(){
+        try{
+            
+            let response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood`);
+
+            let data = await response.json();
+            
+            addMeal(data);
+            console.log("data:",data);
+        }
+        catch(err){
+            console.log("Error:",err);
+        }
+    }
+
+    function addMeal(meal){
+
+        let lines=document.getElementById('line');
+
+        let food1=document.createElement('div');
+        food1.setAttribute('class','foods');
+
+        let food2=document.createElement('div');
+        food2.setAttribute('class','foods');
+
+        
+
+        let image1=document.createElement('img');
+        image1.setAttribute('src',"https://www.themealdb.com/images/media/meals/1548772327.jpg");
+        image1.setAttribute("class","images");
+
+        let name1=document.createElement('p');
+        name1.innerText=`${meal.meals[0].strMeal}`;
+
+        let price1=document.createElement('p')
+        price1.innerText=`$ ${Math.floor(Math.random() * 500)}`;
+
+        let cart1 = document.createElement('button');
+        cart1.innerText="Add to Cart";
+        cart1.setAttribute('onclick','cart()');
+
+        let count1=document.createElement('p');
+        count1.setAttribute('id','counts')
+
+
+        let image2=document.createElement('img');
+        image2.setAttribute('src',"https://www.themealdb.com/images/media/meals/uvuyxu1503067369.jpg");
+        image2.setAttribute("class","images");
+
+        let name2=document.createElement('p');
+        name2.innerText=`${meal.meals[1].strMeal}`;
+
+        let price2=document.createElement('p')
+        price2.innerText=`$ ${Math.floor(Math.random() * 500)}`;   
+
+        let cart2 = document.createElement('button');
+        cart2.innerText="Add to Cart";
+        cart2.setAttribute('onclick','cart()');     
+
+
+        food1.append(image1,name1,price1,cart1);
+        food2.append(image2,name2,price2,cart2);
+
+        lines.append(food1,food2)
+
+        //menu.append(lines);
+    }
+</script>
